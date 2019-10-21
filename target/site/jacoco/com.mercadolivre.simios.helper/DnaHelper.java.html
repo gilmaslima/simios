@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DnaHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">simios</a> &gt; <a href="index.source.html" class="el_package">com.mercadolivre.simios.helper</a> &gt; <span class="el_source">DnaHelper.java</span></div><h1>DnaHelper.java</h1><pre class="source lang-java linenums">package com.mercadolivre.simios.helper;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Scope(&quot;prototype&quot;)
+<span class="fc" id="L10">@Slf4j</span>
+<span class="fc" id="L11">public class DnaHelper {</span>
+
+	private String[][] array;
+
+	public boolean verify(String[] dna) {
+<span class="fc" id="L16">		array = createArrayOfArray(dna);</span>
+		
+<span class="fc" id="L18">		int found = findInLine(array);</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">		if (found == 2) {</span>
+<span class="fc" id="L20">			return true;</span>
+		}
+<span class="fc" id="L22">		found = findInColumn(array, found);</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">		if (found == 2) {</span>
+<span class="fc" id="L24">			return true;</span>
+		}
+<span class="fc" id="L26">		found = findInDiagonal(array, found);</span>
+
+<span class="fc bfc" id="L28" title="All 2 branches covered.">		if (found == 2) {</span>
+<span class="fc" id="L29">			return true;</span>
+		}
+<span class="fc" id="L31">		found = findInDiagonalReverse(array, found);</span>
+
+<span class="fc bfc" id="L33" title="All 2 branches covered.">		return found == 2;</span>
+	}
+
+	private String[][] createArrayOfArray(String[] dna) {
+<span class="fc" id="L37">		log.info(&quot;Creating array of array&quot;);</span>
+<span class="fc" id="L38">		int length = dna.length;</span>
+<span class="fc" id="L39">		String array[][] = new String[length][length];</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">		for (int i = 0; i &lt; dna.length; i++) {</span>
+<span class="fc" id="L41">			array[i] = dna[i].split(&quot;&quot;);</span>
+		}
+<span class="fc" id="L43">		return array;</span>
+	}
+
+	private int findInDiagonalReverse(String[][] array, int found) {
+<span class="fc" id="L47">		log.info(&quot;Diagonal reverse called&quot;);</span>
+<span class="fc" id="L48">		String previous = null;</span>
+<span class="fc" id="L49">		int count = 0;</span>
+<span class="fc" id="L50">		int length = array.length;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L52">			String current = null;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">			for (int j = length - 1; j &gt;= 0;) {</span>
+<span class="pc bpc" id="L54" title="1 of 4 branches missed.">				if (i &gt; 0 &amp;&amp; j - i &gt;= 0) {</span>
+<span class="fc" id="L55">					current = array[i][j - i];</span>
+				}
+<span class="fc bfc" id="L57" title="All 2 branches covered.">				if (previous == null) {</span>
+<span class="fc" id="L58">					previous = array[i][j];</span>
+					break;
+				} else {
+					break;
+				}
+
+			}
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (i == 0) {</span>
+<span class="fc" id="L66">				continue;</span>
+			} else {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">				if (current.equals(previous)) {</span>
+<span class="fc" id="L69">					++count;</span>
+				} else {
+<span class="fc" id="L71">					count = 0;</span>
+				}
+			}
+
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			if (count == 3) {</span>
+<span class="fc" id="L76">				found++;</span>
+<span class="fc" id="L77">				log.info(&quot;Found simian in diagonal reverse&quot;);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">				if(found == 2) {</span>
+<span class="fc" id="L79">					return found;</span>
+				}
+<span class="fc" id="L81">				count = 0;</span>
+			}
+<span class="fc" id="L83">			previous = current;</span>
+		}
+
+<span class="fc" id="L86">		return found;</span>
+	}
+
+	private int findInDiagonal(String[][] array, int found) {
+<span class="fc" id="L90">		log.info(&quot;Diagonal called&quot;);</span>
+<span class="fc" id="L91">		String previous = null;</span>
+<span class="fc" id="L92">		int count = 0;</span>
+<span class="fc" id="L93">		int length = array.length;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L95">			String current = null;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">			for (int j = 0; j &lt; length;) {</span>
+<span class="pc bpc" id="L97" title="1 of 4 branches missed.">				if (i &gt; 0 &amp;&amp; j + i &lt; length) {</span>
+<span class="fc" id="L98">					current = array[i][j + i];</span>
+				}
+<span class="fc bfc" id="L100" title="All 2 branches covered.">				if (previous == null) {</span>
+<span class="fc" id="L101">					previous = array[i][j];</span>
+					break;
+				} else {
+					break;
+				}
+
+			}
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			if (i == 0) {</span>
+<span class="fc" id="L109">				continue;</span>
+			} else {
+<span class="fc bfc" id="L111" title="All 2 branches covered.">				if (current.equals(previous)) {</span>
+<span class="fc" id="L112">					++count;</span>
+				} else {
+<span class="fc" id="L114">					count = 0;</span>
+				}
+			}
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">			if (count == 3) {</span>
+<span class="fc" id="L119">				found++;</span>
+<span class="fc" id="L120">				log.info(&quot;Found simian in diagonal&quot;);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">				if(found == 2) {</span>
+<span class="fc" id="L122">					return found;</span>
+				}
+<span class="fc" id="L124">				count = 0;</span>
+			}
+<span class="fc" id="L126">			previous = current;</span>
+		}
+
+<span class="fc" id="L129">		return found;</span>
+	}
+
+	private int findInColumn(String[][] array, int found) {
+<span class="fc" id="L133">		log.info(&quot;Column called&quot;);</span>
+<span class="fc" id="L134">		String previous = null;</span>
+<span class="fc" id="L135">		int count = 0;</span>
+<span class="fc" id="L136">		int columnNumber = 0;</span>
+<span class="fc" id="L137">		int length = array.length;</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		for (int i = 0; columnNumber &lt; length; i++) {</span>
+<span class="fc" id="L139">			String current = null;</span>
+<span class="fc" id="L140">			current = array[i][columnNumber];</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			if (previous == null) {</span>
+<span class="fc" id="L142">				previous = current;</span>
+<span class="fc" id="L143">				continue;</span>
+			}
+
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if (current.equals(previous)) {</span>
+<span class="fc" id="L147">				++count;</span>
+			} else {
+<span class="fc" id="L149">				count = 0;</span>
+			}
+
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			if (count == 3) {</span>
+<span class="fc" id="L153">				found++;</span>
+<span class="fc" id="L154">				log.info(&quot;Found simian in Column&quot;);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">				if(found == 2) {</span>
+<span class="fc" id="L156">					return found;</span>
+				}
+<span class="fc" id="L158">				count = 0;</span>
+			}
+<span class="fc" id="L160">			previous = current;</span>
+<span class="fc bfc" id="L161" title="All 4 branches covered.">			if (i == length - 1 &amp;&amp; columnNumber &lt; length - 1) {</span>
+<span class="fc" id="L162">				++columnNumber;</span>
+<span class="fc" id="L163">				i = -1;</span>
+<span class="fc" id="L164">				previous = null;</span>
+<span class="fc" id="L165">				count = 0;</span>
+			}
+<span class="fc bfc" id="L167" title="All 4 branches covered.">			if (columnNumber == length - 1 &amp;&amp; i == length - 1) {</span>
+<span class="fc" id="L168">				break;</span>
+			}
+		}
+
+<span class="fc" id="L172">		return found;</span>
+	}
+
+	private int findInLine(String[][] array) {
+<span class="fc" id="L176">		log.info(&quot;Line called&quot;);</span>
+<span class="fc" id="L177">		int found = 0;</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (int i = 0; i &lt; array.length; i++) {</span>
+<span class="fc" id="L179">			int count = 0;</span>
+<span class="fc" id="L180">			String prevLinha = null;</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">			for (int j = 0; j &lt; array[i].length; j++) {</span>
+<span class="fc" id="L182">				String current = array[i][j];</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">				if (prevLinha == null) {</span>
+<span class="fc" id="L184">					prevLinha = current;</span>
+<span class="fc" id="L185">					continue;</span>
+				} else {
+<span class="fc bfc" id="L187" title="All 2 branches covered.">					if (prevLinha.equals(current)) {</span>
+<span class="fc" id="L188">						++count;</span>
+					} else {
+<span class="fc" id="L190">						count = 0;</span>
+					}
+				}
+
+<span class="fc bfc" id="L194" title="All 2 branches covered.">				if (count == 3) {</span>
+<span class="fc" id="L195">					found++;</span>
+<span class="fc" id="L196">					log.info(&quot;Found simian in Line&quot;);</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">					if(found == 2) {</span>
+<span class="fc" id="L198">						return found;</span>
+					}
+<span class="fc" id="L200">					count = 0;</span>
+				}
+<span class="fc" id="L202">				prevLinha = current;</span>
+			}
+		}
+
+<span class="fc" id="L206">		return found;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

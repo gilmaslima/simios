@@ -1,0 +1,6 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+simios,com.mercadolivre.simios.repository,StatsCustomRepository,0,23,0,0,0,6,0,3,0,3
+simios,com.mercadolivre.simios.validation,DnaArrayValidator,0,67,0,12,0,13,0,9,0,3
+simios,com.mercadolivre.simios.service,DnaService,9,103,1,5,0,22,1,7,0,5
+simios,com.mercadolivre.simios.helper,DnaHelper,0,387,5,71,0,118,5,41,0,8
+simios,com.mercadolivre.simios.controller,DnaController,5,67,0,0,1,16,1,4,1,4
