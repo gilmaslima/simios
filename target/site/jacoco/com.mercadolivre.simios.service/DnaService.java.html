@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DnaService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">simios</a> &gt; <a href="index.source.html" class="el_package">com.mercadolivre.simios.service</a> &gt; <span class="el_source">DnaService.java</span></div><h1>DnaService.java</h1><pre class="source lang-java linenums">package com.mercadolivre.simios.service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mercadolivre.simios.helper.DnaHelper;
+import com.mercadolivre.simios.model.Dna;
+import com.mercadolivre.simios.model.Stats;
+import com.mercadolivre.simios.model.StatsResponse;
+import com.mercadolivre.simios.repository.DnaRepository;
+import com.mercadolivre.simios.repository.StatsCustomRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+<span class="fc" id="L19">@Slf4j</span>
+<span class="fc" id="L20">public class DnaService {</span>
+
+	@Autowired
+	private DnaRepository repository;
+	
+	@Autowired
+	private StatsCustomRepository customRepository;
+
+	@Autowired
+	private DnaHelper helper;
+
+	public boolean isSimian(String[] dna) {
+<span class="fc" id="L32">		log.info(&quot;isSimian started&quot;);</span>
+<span class="fc" id="L33">		boolean simian = helper.verify(dna);</span>
+<span class="fc" id="L34">		Dna entity = Dna.createFromArray(dna);</span>
+<span class="fc" id="L35">		entity.setSimian(simian);</span>
+		
+<span class="fc" id="L37">		save(entity);</span>
+
+<span class="fc" id="L39">		return simian;</span>
+	}
+
+	private void save(Dna dna) {
+		
+<span class="fc" id="L44">		Dna saved = repository.save(dna);</span>
+<span class="fc" id="L45">		log.info(&quot;Dna saved {}&quot;, saved);</span>
+<span class="fc" id="L46">	}</span>
+
+	public StatsResponse stats() {
+<span class="fc" id="L49">		Stats stats = customRepository.getStats();</span>
+<span class="fc" id="L50">		log.info(&quot;Getting stats {}&quot;, stats);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (stats.getTotal() == 0) {</span>
+<span class="fc" id="L52">			return StatsResponse.builder().countHumanDna(0L).countSimianDna(0L).ratio(BigDecimal.ZERO.setScale(2))</span>
+<span class="fc" id="L53">					.build();</span>
+		}
+<span class="fc" id="L55">		final Long countMutantDna = stats.getCountMutantDna().longValue();</span>
+<span class="fc" id="L56">		final Long countHumanDna = stats.getCountHumanDna().longValue();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		final BigDecimal ratio = countMutantDna == 0 ? BigDecimal.ZERO.setScale(2)</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">				: countHumanDna == 0 ? new BigDecimal(100).setScale(2)</span>
+<span class="pc" id="L59">						: BigDecimal.valueOf(countMutantDna).divide(BigDecimal.valueOf(countHumanDna), 2, RoundingMode.HALF_EVEN);</span>
+
+<span class="fc" id="L61">		return StatsResponse.builder().countHumanDna(countHumanDna).countSimianDna(countMutantDna).ratio(ratio).build();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
