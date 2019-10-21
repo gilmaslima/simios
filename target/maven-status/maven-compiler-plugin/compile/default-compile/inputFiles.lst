@@ -1,0 +1,13 @@
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/controller/DnaController.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/model/StatsResponse.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/repository/StatsCustomRepository.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/model/DnaRequest.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/model/Dna.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/model/Stats.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/model/SimianResponse.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/repository/DnaRepository.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/service/DnaService.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/helper/DnaHelper.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/validation/DnaArrayValidator.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/validation/DnaConstraint.java
+/home/gilmar/eclipse-workspace/simios/src/main/java/com/mercadolivre/simios/Application.java

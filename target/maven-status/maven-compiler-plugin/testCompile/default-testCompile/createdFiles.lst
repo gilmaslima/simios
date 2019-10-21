@@ -1,0 +1,10 @@
+com/mercadolivre/simios/repository/StatsCustomRepositoryTest.class
+com/mercadolivre/simios/repository/StatsCustomRepositoryTest$TestConfig.class
+com/mercadolivre/simios/helper/DnaHelperTest.class
+com/mercadolivre/simios/helper/DnaHelperTest$TestConfig.class
+com/mercadolivre/simios/controller/DnaControllerTest$TestConfig.class
+com/mercadolivre/simios/validation/DnaArrayValidatorTest$TestConfig.class
+com/mercadolivre/simios/controller/DnaControllerTest.class
+com/mercadolivre/simios/service/DnaServiceTest.class
+com/mercadolivre/simios/validation/DnaArrayValidatorTest.class
+com/mercadolivre/simios/service/DnaServiceTest$TestConfig.class
